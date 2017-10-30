@@ -1,0 +1,61 @@
+<td-layout-nav  navigationRoute="/">
+  <button md-icon-button td-menu-button tdLayoutToggle>
+    <md-icon>menu</md-icon>
+  </button>
+  <div td-toolbar-content layout="row" layout-align="center center" flex>
+    <span>Todo App</span>
+    <span flex></span>
+    <a md-icon-button mdTooltip="Github" href="https://github.com/anandmv" target="_blank"><md-icon svgIcon="assets:github"></md-icon></a>
+  </div>
+  <div layout-gt-xs="row" layout-align-gt-xs="center start" class="margin">
+    <div flex-gt-xs="50">
+      <md-card tdMediaToggle="gt-xs" [mediaClasses]="['push-top-lg']">
+        <md-card-title>
+          Todo
+          <span class="refresh">     
+            <a md-icon-button mdTooltip="Refresh List" (click)="getTodoList()"><md-icon>refresh</md-icon></a>
+          </span>
+        </md-card-title>
+        <md-card-subtitle>Display :  
+          <md-checkbox [(ngModel)]="displayCompleted" (change)="filterTodo('displayCompleted')">Completed</md-checkbox>
+          <md-checkbox [(ngModel)]="displayPending" (change)="filterTodo('displayPending')">Pending</md-checkbox>
+        </md-card-subtitle>
+        <md-divider></md-divider>
+        <md-list class="will-load alert-list">
+          <ng-template tdLoading="todo.load">
+            <ng-template let-item let-last="last" ngFor [ngForOf]="todos">
+              <md-list-item layout-align="row">
+                <h3 md-line>
+                  <md-checkbox [(ngModel)]="item.completed" (click)="update(item)"></md-checkbox> 
+                  <span class="title">{{item.title}}</span>
+                  <span class="date"> {{item.created | date:'medium' }} </span>
+                </h3>
+              </md-list-item>
+              <md-divider *ngIf="!last" class="min-height"></md-divider>
+            </ng-template>
+          </ng-template>
+        </md-list>
+        <md-divider></md-divider>
+        <md-card-actions>
+          <form #todoForm="ngForm">
+            <div layout="row">
+              <md-input-container flex="90"> 
+                <input mdInput #titleElement #todoControl="ngModel" placeholder="New Todo Title" type="text" maxlength="98" name="title" [(ngModel)]="title" required autofocus/>
+                <md-hint align="start">
+                  <span [hidden]="!todoControl.errors?.required || todoControl.pristine" class="tc-red-600">Required</span>
+                </md-hint>
+              </md-input-container>
+              <button  md-button color="accent" [disabled]="!todoForm.form.valid" (click)="save()">Add</button>              
+            </div>
+          </form>
+        </md-card-actions>
+      </md-card>
+    </div>
+  </div>
+  <td-layout-footer>
+    <div layout="row" layout-align="start center">
+      <span class="md-caption">Todo App - Angular2 - Material Design - SpringBoot - H2</span>
+      <span flex></span>
+    </div>
+  </td-layout-footer>
+</td-layout-nav>
