@@ -5,3 +5,6 @@ Build using
  * Typescipt
  * Covalent Theme
  * REST Interface 
+ * Spring Boot
+ * H2 Database (In memory)
+ * CORS Managment 
